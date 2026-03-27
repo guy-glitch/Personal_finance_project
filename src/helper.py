@@ -29,6 +29,7 @@
 
 import random
 import csv
+import hashlib
 
 #text formatting function
 def f(format, text = ''):
@@ -237,3 +238,28 @@ def list_choice(choices,prompt = 'Choose an option:'):
     else:
         #return what they chose
         return chosen
+
+#define a function that checks if a username exists in a csv (first column)
+def exists(location, search):
+    try:
+        with open(location, mode="r", newline="") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                # skip empty lines
+                if row and row[0] == search:
+                    return True
+    except FileNotFoundError:
+        print("file does not exist.")
+    except Exception:
+        # fallback for unexpected errors
+        print("error reading file")
+    return False
+    
+#A function that clears the screen  
+def clear_screen():
+    print("\033c", end="")
+
+def hash_pw(item: str) -> str:
+    sha256 = hashlib.sha256()
+    sha256.update(item.encode("utf-8"))
+    return sha256.hexdigest()
