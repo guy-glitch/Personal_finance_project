@@ -26,6 +26,11 @@
 
 # list_choice() is incredibly useful. It accepts a list and prompt and prints the prompt, then each item in the list with a number assigned. Then it asks the user for a choice, which can be a number assigned to a choice or one of the choices. It returns what they chose. Super useful for making menus, to make a menu where the user picks between search, add, or quit you would use just this one line of code: choice = list_input(['search','add','quit'],'What would you like to do?')
 
+# exists() takes a file path to a csv and a search query, and sees if that search query is exactly the same as an item in the first column of the csv file. I'm not sure what the practical uses of this are as i didn't write it.
+
+# clear_screen() does exactly the same thing as f("clear"). It clears the screen
+
+# i have no idea what hash_pw() does
 
 import random
 import csv
@@ -255,7 +260,8 @@ def exists(location, search):
         print("error reading file")
     return False
     
-#A function that clears the screen  
+#A function that clears the screen
+#You can also do this with f("clear")  
 def clear_screen():
     print("\033c", end="")
 
@@ -263,3 +269,41 @@ def hash_pw(item: str) -> str:
     sha256 = hashlib.sha256()
     sha256.update(item.encode("utf-8"))
     return sha256.hexdigest()
+
+#dictify function
+    #loop through given dictionary or list
+        #if current item is a list or dictionary
+            #dictify it (recursion!)
+        #if current item is an instance of one of our classes
+            #run __dict__ on it to get it in dictionary form and set a variable to that
+            #add a new key to the dictionary "classtype" and set it equal to typeof object
+            #replace the object in the dictionary with the __dict__ified object
+    #return the dictionary
+
+#undictify function
+    #loop through given dictionary or list
+        #if current item is a list or dictionary
+            #undictify it (recursion!)
+        #if current item is a dictionary with the "classtype" key
+            #use match and case to find what object it should be
+                #in each case create an object with the properties specied in the dictionary
+            #replace the dictionary in the parent dictionary/list with th new object
+    #return the dictionary
+
+#JSON writer function
+    #if input is not a dictionary:
+        #return false
+    #if file path does not exist
+        #return false
+    #dictify the dictionary
+    #open given file path
+        #write dictionary to it
+    #return true
+
+#JSON reader function
+    #if file path does not exist
+        #return false
+    #open file path
+        #grab data as a dictionary
+        #undictify it
+    #return data
