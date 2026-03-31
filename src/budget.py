@@ -28,6 +28,7 @@
 #parameters:user profile info
     #create a menu that has the option to view, change, or quit
     #if they choose to view
+        #get dictionary of user values to use in the graph
         #display the graph with the display function(Levi)
     #else if they choose to change
         #ask if they would like to change the percentages or the catigories
