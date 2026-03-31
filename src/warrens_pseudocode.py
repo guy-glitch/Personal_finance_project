@@ -26,6 +26,12 @@
 
     #Check the json for the username then hash the password and see if it fits the requirements 
 
+#A function that gets their goal and saves it
+
+#A function that takes in their previous progress towards their goal, and then asks how much more money they have added, and updates the progress.
+
 #class user
 
     #initialize and set their goal to 100 their username to the inputed username, and password, set their progress to zero
+
+#A function that logs them out and takes them back to the main menu without them being logged in.
