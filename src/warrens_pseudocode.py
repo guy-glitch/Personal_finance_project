@@ -10,7 +10,7 @@
     
     #hash their password and save its value
 
-#define a function that edits the account csv adding accounts to the user csv
+#define a function that edits the account json adding accounts to the user json
     
     #Open the file in append mode
     
