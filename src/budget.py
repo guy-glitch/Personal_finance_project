@@ -11,14 +11,12 @@
     #else if they choose income
         #ask how much they got
         #ask for the source
-        #get the time
+        #call the income class and formate this info to save
         #go into budget input that amount and have the money distributed by the percentages of the catigories
         #formate that info and save it to the user profile with the save function(made by Braken)
     #else if they choose expense
         #ask how much they spent
-        #ask from which budget catigory they will take from
-        #make sure that catigory exists otherwise they have to choose again
-        #get the time 
+        #call the expense class
         #save all that information to the user account
         #go into the budget info and subtract the amount from the specified catigory
     #else if they choose to quit
@@ -52,6 +50,37 @@
     #else if they choose to quit
         #exit the function
     #else make them choose again and tell them int was an invalid choice
+
+
+#Classes
+#income class
+    #initiate amount and source
+    #string
+        #formate the amount, source and time from the time function
+    #time
+        #get the time
+        #formate it
+        #return it
+
+#expense class
+    #initiate amount
+    #string
+        #formate this info to print
+    #formate
+        #formate the info to input into the user profile
+    #time
+        #get the time
+        #formate it
+        #return it
+    #catigory validation
+        #go to the user profile and get the catigories
+        #start while loop
+            #show all the catiogories
+            #ask user to choose one
+            #if it is actually a catigory 
+                #return that
+            #else it isn't
+                #restart loop and go again
 
 
 
