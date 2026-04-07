@@ -88,15 +88,16 @@ class Menu:
     def use(self):
         #show window
         root=tkinter.Tk()
-        root.title('TEXT TITLE')
+        root.title('Personal Finance')
         root.configure(background='black')
         root.minsize(500,500)
         root.maxsize(1000,1000)
         root.geometry('700x700+1300+500')
+        out=tkinter.StringVar()
         #return option clicked
         def push(name):
+            out=name
             root.destroy()
-            return name
         #check for box click
         buttons=[]
         for v in self.options:
@@ -105,13 +106,14 @@ class Menu:
             i.pack()
             i.place(x=100,y=700/len(self.options)*(v+0.42))
         root.mainloop()
+        return out
         
 
 #create function inputs, get question and wrong
 def inputs(question,wrong):
     #create window, show question and text box
     root=tkinter.Tk()
-    root.title('TEXT TITLE')
+    root.title('Personal Finance')
     root.configure(background='black')
     root.minsize(500,500)
     root.maxsize(1000,1000)
@@ -135,6 +137,14 @@ def inputs(question,wrong):
     return out.get()
 
 #create function show, get stuff
+def show(stuff):
     #create window and display stuff
+    root=tkinter.Tk()
+    root.title('Personal Finance')
+    root.configure(background='black')
+    root.minsize(500,500)
+    root.maxsize(1000,1000)
+    root.geometry('700x700+1300+500')
+    tkinter.Message(root,text=stuff,width=700)
 
-print(inputs('HELLO',True))
+#need to test everything except inputs
