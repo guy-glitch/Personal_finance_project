@@ -30,11 +30,14 @@
 
 # clear_screen() does exactly the same thing as f("clear"). It clears the screen
 
-# i have no idea what hash_pw() does
+# i have no idea what hash_pw() does it hashes any item I named it that because that is what it is named in that file
+
+#A function that clears the screen after they press enter and a function that waits 4 seconds befoe clearing the screen
 
 import random
 import csv
 import hashlib
+import time as t
 
 #text formatting function
 def f(format, text = ''):
@@ -263,6 +266,14 @@ def exists(location, search):
 #A function that clears the screen
 #You can also do this with f("clear")  
 def clear_screen():
+    print("\033c", end="")
+
+def clear_wait_screen():
+    t.sleep(4)
+    print("\033c", end="")
+
+def clear_screen_reading():
+    input("Press enter to continue...")
     print("\033c", end="")
 
 def hash_pw(item: str) -> str:
