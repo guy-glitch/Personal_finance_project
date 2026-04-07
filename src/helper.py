@@ -271,13 +271,35 @@ def hash_pw(item: str) -> str:
     return sha256.hexdigest()
 
 #dictify function
-    #loop through given dictionary or list
-        #if current item is a list or dictionary
-            #dictify it (recursion!)
-        #if current item is an instance of one of our classes
-            #run __dict__ on it to get it in dictionary form and set a variable to that
-            #add a new key to the dictionary "classtype" and set it equal to typeof object
-            #replace the object in the dictionary with the __dict__ified object
+def dictify(items):
+    if type(items) is list:
+        dictified = []
+        #loop through given dictionary or list
+        for item in items:
+            #if current item is a list or dictionary
+            if type(item) is dict or type(item) is list:
+                #dictify it (recursion!)
+                item = dictify(item)
+            #if current item is an instance of one of our classes
+            elif hasattr(item,__dict__):
+                #run __dict__ on it to get it in dictionary form and set a variable to that
+                item = item.__dict__()
+                #add a new key to the dictionary "classtype" and set it equal to typeof object
+                item['classtype'] = type(item)
+                #replace the object in the dictionary with the __dict__ified object
+            dictified.append(item)
+        return dictified
+    elif type(items) is dict:
+        dictified = {}
+        for itemkey in items.keys():
+            item = items[itemkey]
+            if type(item) is dict or type(item) is list:
+                item = dictify(item)
+            elif hasattr(item,__dict__):
+                item = item.__dict__()
+                item['classtype'] = type(item)
+            dictified[itemkey] = item
+        return dictified
     #return the dictionary
 
 #undictify function
