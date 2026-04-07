@@ -62,7 +62,7 @@ def create_account():
 
 #A function to encrypt saved passwords with the hashlib library using a specific encryption  this is in helper library
 
-def login(poker_scores,blackjack_scores,slots_scores):
+def login():
     users = parse_user()
     name = input("What is your username? ").strip()
     pw = input("What is your password? ")
