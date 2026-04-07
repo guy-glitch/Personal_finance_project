@@ -110,7 +110,7 @@ class Menu:
         
 
 #create function inputs, get question and wrong
-def inputs(question,wrong):
+def inputs(question,wrong=False):
     #create window, show question and text box
     root=tkinter.Tk()
     root.title('Personal Finance')
@@ -122,6 +122,9 @@ def inputs(question,wrong):
     enter=tkinter.Entry(root,width=50,textvariable=out)
     enter.pack()
     enter.place(x=200,y=350)
+    q=tkinter.Label(root,text=question)
+    q.pack()
+    q.place(x=250,y=300)
     #return text box entry
     def end():
         root.destroy()
@@ -146,5 +149,11 @@ def show(stuff):
     root.maxsize(1000,1000)
     root.geometry('700x700+1300+500')
     tkinter.Message(root,text=stuff,width=700)
+    def end():
+        root.destroy()
+    button=tkinter.Button(root,text='Continue',command=end)
+    button.pack()
+    button.place(x=300,y=500)
+    root.mainloop()
 
 #need to test everything except inputs
