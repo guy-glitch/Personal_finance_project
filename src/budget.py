@@ -24,11 +24,12 @@ Time:{self.time()}"""
         #formate it
         add = f"{self.amount}|{self.source}|{self.time()}"
         #add to user history
+        self.user["history"].append(add)
 
     def time(self):
         now = datetime.now() 
         #formatted time is the time in the correct formate
-        formatted_time = now.strftime("%B %d, %Y at %I:%M %p")
+        formatted_time = now.strftime("%B %d, %Y")
         #return formatted time
         return formatted_time
 
@@ -36,8 +37,8 @@ Time:{self.time()}"""
 class Expense():
     #initiate amount
     def __init__(self,amount, user):
-        self.amount = amount
-        self.user
+        self.amount = -1*amount
+        self.user = user
     #string
     def __str__(self):
         #formate the amount, source and time from the time function
@@ -51,21 +52,22 @@ Time:{self.time()}"""
         #formate it
         add = f"{self.amount}|{self.catigory()}|{self.time()}"
         #add to user history
+        self.user["history"].append(add)
     #time
     def time(self):
         now = datetime.now() 
         #formatted time is the time in the correct formate
-        formatted_time = now.strftime("%B %d, %Y at %I:%M %p")
+        formatted_time = now.strftime("%B %d, %Y")
         #return formatted time
         return formatted_time
     #catigory validation
     def catigory(self):
         #go to the user profile and get the catigories
-        catigories = self.user.get("catigories")
+        catigories = self.user["catigories"]
         #start while loop
         while True:
             #show all the catiogories
-            choice = list_choice(catigories, prompt="Choose a catigory you would like to withdraw money from:")
+            choice = list_choice(catigories.keys(), prompt="Choose a catigory you would like to withdraw money from:")
             #ask user to choose one
             #if it is actually a catigory
             if choice in catigories: 
@@ -173,7 +175,9 @@ def budgeting(user):
         #exit the function
         pass
 
-
+practice_dict = {"history": [],
+                 "catigories": {"starter":[0,100]}}
+income_expense(practice_dict)
 
 
 
