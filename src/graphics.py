@@ -1,6 +1,6 @@
 #graphs and graphics
 
-import matplotlib.pyplot as plt, tkinter
+import matplotlib.pyplot as plt, tkinter, copy
 
 #create class pie,
 class Pie:
@@ -83,6 +83,7 @@ class Menu:
     def __init__(self,options):
         #create window with boxes for every option
         self.options=options
+        self.result = None
 
     #create function use
     def use(self):
@@ -95,19 +96,19 @@ class Menu:
         root.geometry('700x700+1300+500')
         out=tkinter.StringVar()
         #return option clicked
-        def push(name):
+        def push(menu,name):
             out=name
+            menu.result = out
             root.destroy()
         #check for box click
         buttons=[]
-        for v in self.options:
-            buttons.append(tkinter.Button(root,text=v,command=lambda: push(v)))
+        for x in self.options:
+            buttons.append(tkinter.Button(root,text=x,command=lambda x=x: push(self,x)))
         for v,i in enumerate(buttons):
             i.pack()
             i.place(x=100,y=700/len(self.options)*(v+0.42))
         root.mainloop()
-        return out
-        
+        return self.result 
 
 #create function inputs, get question and wrong
 def inputs(question,wrong=False):

@@ -65,7 +65,7 @@ def create_account():
 
 def login():
     while True:
-        users = parse_user()
+        users = json_pull('documents/user.json')
         name = graphics.inputs("What is your username? ").strip()
         pw = graphics.inputs("What is your password? ")
         hashed = hash_pw(pw)
