@@ -38,7 +38,7 @@ import random
 import csv
 import hashlib
 import time as t
-
+import json
 #text formatting function
 def f(format, text = ''):
     formatters = { 
@@ -292,11 +292,12 @@ def dictify(items):
                 #dictify it (recursion!)
                 item = dictify(item)
             #if current item is an instance of one of our classes
-            elif hasattr(item,__dict__):
+            elif hasattr(item,'__dict__'):
                 #run __dict__ on it to get it in dictionary form and set a variable to that
-                item = item.__dict__()
                 #add a new key to the dictionary "classtype" and set it equal to typeof object
-                item['classtype'] = type(item)
+                classtype = type(item).__name__
+                item = item.__dict__
+                item['classtype'] = classtype
                 #replace the object in the dictionary with the __dict__ified object
             dictified.append(item)
         return dictified
@@ -306,37 +307,100 @@ def dictify(items):
             item = items[itemkey]
             if type(item) is dict or type(item) is list:
                 item = dictify(item)
-            elif hasattr(item,__dict__):
-                item = item.__dict__()
-                item['classtype'] = type(item)
+            elif hasattr(item,'__dict__'):
+                classtype = type(item).__name__
+                item = item.__dict__
+                item['classtype'] = classtype
             dictified[itemkey] = item
         return dictified
     #return the dictionary
 
+
 #undictify function
+def undictify(items):
     #loop through given dictionary or list
-        #if current item is a list or dictionary
-            #undictify it (recursion!)
-        #if current item is a dictionary with the "classtype" key
-            #use match and case to find what object it should be
-                #in each case create an object with the properties specied in the dictionary
+    if type(items) is list:
+        undictified = []
+        for item in items:
+            #if current item is a list or dictionary
+            if type(item) is dict or type(item) is list:
+                #undictify it (recursion!)
+                item = undictify(item)
+            #if current item is a dictionary with the "classtype" key
+            try:
+                classtype = globals()[item['classtype']]
+                item.pop('classtype')
+                #create an object with the properties specified in the dictionary
+                itemobj = classtype()
+                for key in item.keys():
+                    value = item[key]
+                    setattr(itemobj,key,value)
+                item = itemobj
+            except:
+                pass
             #replace the dictionary in the parent dictionary/list with th new object
+            undictified.append(item)
+    elif type(items) is dict:
+        undictified = {}
+        for itemkey in items.keys():
+            item = items[itemkey]
+            #if current item is a list or dictionary
+            if type(item) is dict or type(item) is list:
+                #undictify it (recursion!)
+                item = undictify(item)
+            #if current item is a dictionary with the "classtype" key
+            try:
+                classtype = globals()[item['classtype']]
+                item.pop('classtype')
+                #create an object with the properties specified in the dictionary
+                itemobj = classtype()
+                for key in item.keys():
+                    value = item[key]
+                    setattr(itemobj,key,value)
+                item = itemobj
+            except:
+                pass
+            #replace the dictionary in the parent dictionary/list with th new object
+            undictified[itemkey] = item
     #return the dictionary
+    return undictified
 
 #JSON writer function
+def json_dump(file_path,items):
     #if input is not a dictionary:
+    if not type(items) is dict:
         #return false
+        return False
     #if file path does not exist
+    try:
+        with open(file_path,'r'):
+            pass
+    except:
         #return false
+        return False
     #dictify the dictionary
+    items = dictify(items)
     #open given file path
+    with open(file_path,'w') as file:
         #write dictionary to it
+        json.dump(items, file)
     #return true
+    return True
 
 #JSON reader function
+def json_pull(file_path):
     #if file path does not exist
+    try:
+        with open(file_path,'r'):
+            pass
+    except:
         #return false
+        return False
     #open file path
+    with open(file_path,'r') as file:
         #grab data as a dictionary
+        data = json.load(file)
         #undictify it
+        data = undictify(data)
     #return data
+    return data
