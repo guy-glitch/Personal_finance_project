@@ -328,16 +328,24 @@ def undictify(items):
                 item = undictify(item)
             #if current item is a dictionary with the "classtype" key
             try:
-                classtype = globals()[item['classtype']]
-                item.pop('classtype')
-                #create an object with the properties specified in the dictionary
-                itemobj = classtype()
-                for key in item.keys():
-                    value = item[key]
-                    setattr(itemobj,key,value)
-                item = itemobj
+                item['classtype']
+                obj = True
             except:
-                pass
+                obj = False
+            if obj:
+                try:
+                    classtype = globals()[item['classtype']]
+                    item.pop('classtype')
+                    #create an object with the properties specified in the dictionary
+                    itemobj = classtype()
+                    for key in item.keys():
+                        value = item[key]
+                        setattr(itemobj,key,value)
+                    item = itemobj
+                except KeyError:
+                    print(f'The class {item['classtype']} is not imported into helper.py! Import it at the top of helper.py to make loading work properly!')
+                except Exception as e:
+                    print(f'Unknown error when loading object! {e}')
             #replace the dictionary in the parent dictionary/list with th new object
             undictified.append(item)
     elif type(items) is dict:
@@ -350,16 +358,24 @@ def undictify(items):
                 item = undictify(item)
             #if current item is a dictionary with the "classtype" key
             try:
-                classtype = globals()[item['classtype']]
-                item.pop('classtype')
-                #create an object with the properties specified in the dictionary
-                itemobj = classtype()
-                for key in item.keys():
-                    value = item[key]
-                    setattr(itemobj,key,value)
-                item = itemobj
+                item['classtype']
+                obj = True
             except:
-                pass
+                obj = False
+            if obj:
+                try:
+                    classtype = globals()[item['classtype']]
+                    item.pop('classtype')
+                    #create an object with the properties specified in the dictionary
+                    itemobj = classtype()
+                    for key in item.keys():
+                        value = item[key]
+                        setattr(itemobj,key,value)
+                    item = itemobj
+                except KeyError:
+                    print(f'The class {item['classtype']} is not imported into helper.py! Import it at the top of helper.py to make loading work properly!')
+                except Exception as e:
+                    print(f'Unknown error when loading object! {e}')
             #replace the dictionary in the parent dictionary/list with th new object
             undictified[itemkey] = item
     #return the dictionary
@@ -375,7 +391,9 @@ def json_dump(file_path,items):
     try:
         with open(file_path,'r'):
             pass
-    except:
+    except FileNotFoundError:
+        create_json(file_path)
+    except Exception:
         #return false
         return False
     #dictify the dictionary
@@ -386,6 +404,13 @@ def json_dump(file_path,items):
         json.dump(items, file)
     #return true
     return True
+
+def create_json(file_path):
+    try:
+        with open(file_path,'w') as file:
+            file.write('{}')
+    except:
+        print('Directory does not exist!')
 
 #JSON reader function
 def json_pull(file_path):

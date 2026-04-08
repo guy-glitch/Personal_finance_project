@@ -2,7 +2,7 @@
 
 #import absolutely everything
 import graphics,login
-
+from helper import *
 #dict={history:{income:[income values],expenses:[expense values]},categories:{category:value},goal:[goal,progress]}
 
 #create function main
@@ -15,6 +15,7 @@ def main():
         #if login/create account
         else:
             #call retrieve info JSON function(bracken)
+            userdata = json_pull('documents/user_info.json')
             #call login function(warren)
             if graphics.Menu(['Login','Create Account']).use()=='Login':
                 user=login.login()
@@ -27,7 +28,7 @@ def main():
                 #if manage incom/expenses
                 if choice=='Manage Income/Expenses':
                     #call incom/expense tracking function(anna)
-                    
+                    pass #this is here until anna inserts her function
                 #else if create savings goal
                 elif choice=='Create Savings Goal':
                     #call set goal function(warren)
@@ -39,6 +40,7 @@ def main():
                 #else if budget
                 elif choice=='Budget':
                     #call budgeting function(anna)
+                    pass #this is here until anna inserts her function
                 #else
                 else:
                     #break out of loop
@@ -46,4 +48,5 @@ def main():
         #else
             #break out of loop
     #call save to JSON function
-
+    json_dump('ducuments/user_info.json',userdata)
+main()
