@@ -1,13 +1,20 @@
 #main function
 
 #import absolutely everything
+import graphics
 
 #create function main
+def main():
     #loop
+    while True:
         #get user input for login/create account or exit
+        if graphics.Menu(['Login/Create Account','Exit'])=='Exit':
+            break
         #if login/create account
+        else:
             #call retrieve info JSON function(bracken)
             #call login function(warren)
+            login.
             #loop
                 #get user input for manage income/expenses, create savings goal, update savings goal, budget, and log out
                 #if manage incom/expenses
