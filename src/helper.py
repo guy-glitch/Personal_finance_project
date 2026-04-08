@@ -30,11 +30,14 @@
 
 # clear_screen() does exactly the same thing as f("clear"). It clears the screen
 
-# i have no idea what hash_pw() does
+# i have no idea what hash_pw() does it hashes any item I named it that because that is what it is named in that file
+
+#A function that clears the screen after they press enter and a function that waits 4 seconds befoe clearing the screen
 
 import random
 import csv
 import hashlib
+import time as t
 
 #text formatting function
 def f(format, text = ''):
@@ -265,19 +268,49 @@ def exists(location, search):
 def clear_screen():
     print("\033c", end="")
 
+def clear_wait_screen():
+    t.sleep(4)
+    print("\033c", end="")
+
+def clear_screen_reading():
+    input("Press enter to continue...")
+    print("\033c", end="")
+
 def hash_pw(item: str) -> str:
     sha256 = hashlib.sha256()
     sha256.update(item.encode("utf-8"))
     return sha256.hexdigest()
 
 #dictify function
-    #loop through given dictionary or list
-        #if current item is a list or dictionary
-            #dictify it (recursion!)
-        #if current item is an instance of one of our classes
-            #run __dict__ on it to get it in dictionary form and set a variable to that
-            #add a new key to the dictionary "classtype" and set it equal to typeof object
-            #replace the object in the dictionary with the __dict__ified object
+def dictify(items):
+    if type(items) is list:
+        dictified = []
+        #loop through given dictionary or list
+        for item in items:
+            #if current item is a list or dictionary
+            if type(item) is dict or type(item) is list:
+                #dictify it (recursion!)
+                item = dictify(item)
+            #if current item is an instance of one of our classes
+            elif hasattr(item,__dict__):
+                #run __dict__ on it to get it in dictionary form and set a variable to that
+                item = item.__dict__()
+                #add a new key to the dictionary "classtype" and set it equal to typeof object
+                item['classtype'] = type(item)
+                #replace the object in the dictionary with the __dict__ified object
+            dictified.append(item)
+        return dictified
+    elif type(items) is dict:
+        dictified = {}
+        for itemkey in items.keys():
+            item = items[itemkey]
+            if type(item) is dict or type(item) is list:
+                item = dictify(item)
+            elif hasattr(item,__dict__):
+                item = item.__dict__()
+                item['classtype'] = type(item)
+            dictified[itemkey] = item
+        return dictified
     #return the dictionary
 
 #undictify function
