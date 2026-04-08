@@ -48,5 +48,5 @@ def main():
         #else
             #break out of loop
     #call save to JSON function
-    json_dump('ducuments/user_info.json',userdata)
+    #json_dump('ducuments/user_info.json',userdata)
 main()
