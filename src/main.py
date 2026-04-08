@@ -3,6 +3,8 @@
 #import absolutely everything
 import graphics,login
 
+#dict={history:{income:[income values],expenses:[expense values]},categories:{category:value},goal:[goal,progress]}
+
 #create function main
 def main():
     #loop
@@ -25,12 +27,15 @@ def main():
                 #if manage incom/expenses
                 if choice=='Manage Income/Expenses':
                     #call incom/expense tracking function(anna)
+                    
                 #else if create savings goal
                 elif choice=='Create Savings Goal':
                     #call set goal function(warren)
+                    login.goal_get()#set user goal to this on user name
                 #else if update savings goal
-                elif choice=='Update Savings Goal'
+                elif choice=='Update Savings Goal':
                     #call goal update function(warren)
+                    login.new_goal_progress()#set this to user goal, give this user name
                 #else if budget
                 elif choice=='Budget':
                     #call budgeting function(anna)

@@ -96,5 +96,5 @@ def new_goal_progress(user):
     #Do the thing where you add the progress to the json
 
 #A function that logs them out and takes them back to the main menu without them being logged in.
-def logout():
+def logout(): 
     return 
