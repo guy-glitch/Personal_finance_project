@@ -10,7 +10,9 @@ def main():
     #loop
     while True:
         #get user input for login/create account or exit
-        if graphics.Menu(['Login/Create Account','Exit']).use()=='Exit':
+        call=graphics.Menu(['Login/Create Account','Exit']).use()
+        print(call)
+        if call=='Exit':
             break
         #if login/create account
         else:
@@ -27,7 +29,7 @@ def main():
                 #if manage incom/expenses
                 if choice=='Manage Income/Expenses':
                     #call incom/expense tracking function(anna)
-                    
+                    pass
                 #else if create savings goal
                 elif choice=='Create Savings Goal':
                     #call set goal function(warren)
@@ -39,6 +41,7 @@ def main():
                 #else if budget
                 elif choice=='Budget':
                     #call budgeting function(anna)
+                    pass
                 #else
                 else:
                     #break out of loop
@@ -47,3 +50,4 @@ def main():
             #break out of loop
     #call save to JSON function
 
+main()

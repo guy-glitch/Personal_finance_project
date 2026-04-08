@@ -93,20 +93,19 @@ class Menu:
         root.minsize(500,500)
         root.maxsize(1000,1000)
         root.geometry('700x700+1300+500')
-        out=tkinter.StringVar()
         #return option clicked
         def push(name):
-            out=name
+            root.out=name
             root.destroy()
         #check for box click
         buttons=[]
-        for v in self.options:
-            buttons.append(tkinter.Button(root,text=v,command=lambda: push(v)))
+        for i,v in enumerate(self.options):
+            buttons.append(tkinter.Button(root,text=v,command=lambda: push(buttons[i].cget('text'))))
         for v,i in enumerate(buttons):
             i.pack()
             i.place(x=100,y=700/len(self.options)*(v+0.42))
         root.mainloop()
-        return out
+        return root.out
         
 
 #create function inputs, get question and wrong
