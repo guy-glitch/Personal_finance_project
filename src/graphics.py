@@ -83,6 +83,7 @@ class Menu:
     def __init__(self,options):
         #create window with boxes for every option
         self.options=options
+        self.result = None
 
     #create function use
     def use(self):
@@ -153,15 +154,13 @@ def show(stuff):
     root.minsize(500,500)
     root.maxsize(1000,1000)
     root.geometry('700x700+1300+500')
-    tkinter.Message(root,text=stuff,width=700,foreground='white',background='black',font='50').pack()
+    message = tkinter.Message(root,text=stuff,width=700)
+    message.pack()
+    message.place(x=300,y=400)
     def end():
         root.destroy()
     button=tkinter.Button(root,text='Continue',command=end)
     button.pack()
     button.place(x=300,y=500)
     root.mainloop()
-
 #need to test everything except inputs
-
-x=Bars({'first':235,'second':212,'third':401},'YAXIS','vapt')
-x.show()
