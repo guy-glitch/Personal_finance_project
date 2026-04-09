@@ -194,9 +194,9 @@ def budgeting(user):
         #exit the function
         pass
 
-practice_dict = {"history": [],
-                 "catigories": {"starter":[0,100]}}
-income_expense(practice_dict)
+#practice_dict = {"history": [],
+#                 "catigories": {"starter":[0,100]}}
+#income_expense(practice_dict)
 
 
 
