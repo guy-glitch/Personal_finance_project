@@ -45,7 +45,7 @@ def create_account():
         pw = graphics.inputs("Choose a password (12+ chars, upper, lower, digit, special): ")
         add_user(name, hash_pw(pw))
         graphics.show("Account created.")
-        break
+        return name
     
     #get their password
     
