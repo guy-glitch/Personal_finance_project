@@ -83,6 +83,7 @@ class Menu:
     def __init__(self,options):
         #create window with boxes for every option
         self.options=options
+        self.result = None
 
     #create function use
     def use(self):
@@ -93,23 +94,21 @@ class Menu:
         root.minsize(500,500)
         root.maxsize(1000,1000)
         root.geometry('700x700+1300+500')
+        out=tkinter.StringVar()
         #return option clicked
-        def push(name):
-            self.out=self.buttons[name].cget('name')
+        def push(menu,name):
+            out=name
+            menu.result = out
             root.destroy()
-        '''def push(name):
-            root.out=name
-            root.destroy()'''
         #check for box click
         buttons=[]
-        for i,v in enumerate(self.options):
-            buttons.append(tkinter.Button(root,text=v,command=lambda: push(i)))
-            #buttons.append(tkinter.Button(root,text=v,command=lambda name=v: push(name)))
+        for x in self.options:
+            buttons.append(tkinter.Button(root,text=x,command=lambda x=x: push(self,x)))
         for v,i in enumerate(buttons):
             i.pack()
             i.place(x=100,y=700/len(self.options)*(v+0.42))
         root.mainloop()
-        return self.out
+        return self.result
         
 
 #create function inputs, get question and wrong
