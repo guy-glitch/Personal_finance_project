@@ -3,7 +3,7 @@
 #Pseudocode
 from helper import *
 from datetime import datetime
-import tkinter as tk
+from graphics import *
 #Classes
 #income class
 class Income():
@@ -13,20 +13,20 @@ class Income():
         self.source = source
         self.user = user
     #string
-    def __str__(self):
-        #formate the amount, source and time from the time function
-        return f"""Income Input:
-        Amount: {self.amount}
-Source: {self.source}
-Time:{self.time()}"""
-    #add to user history
     def add_history(self):
         #take in all the info
         #formate it
         add = f"{self.amount}|{self.source}|{self.time()}"
         #add to user history
-        self.user["history"].append(add)
-
+        self.user["income history"].append(add)
+        return self.user
+    
+    def update_amount(self):
+        for i in self.user["catigories"].keys():
+            value = self.user["catigories"][i].get()
+            v = value[1]/100
+            v_2 = self.amount*v
+            self.user["catigories"][i] += v_2
     def time(self):
         now = datetime.now() 
         #formatted time is the time in the correct formate
@@ -41,20 +41,19 @@ class Expense():
         self.amount = -1*amount
         self.user = user
     #string
-    def __str__(self):
-        #formate the amount, source and time from the time function
-        return f"""Income Input:
-        Amount: {self.amount} 
-Catigory: {self.catigory()}
-Time:{self.time()}"""
-    #formate
     def add_history(self):
         #take in all the info
         #formate it
-        add = f"{self.amount}|{self.catigory()}|{self.time()}"
+        catigori = self.catigory()
+        add = f"{self.amount}|{catigori}|{self.time()}"
         #add to user history
-        self.user["history"].append(add)
+        self.update_amount(catigori)
+        self.user["expense history"].append(add)
+        return self.user
     #time
+    def update_amount(self,catigory):
+        self.user["catigories"][catigory] -= self.amount
+        return self.user
     def time(self):
         now = datetime.now() 
         #formatted time is the time in the correct formate
@@ -82,70 +81,54 @@ Time:{self.time()}"""
 #income and expense tracking
 def income_expense(profile_info):
 #parameters:user profile info
-    root = tk.Tk()
-    root.title("Income and Expense Tracking")
-    root.configure(background="pink")
-    root.minsize(250, 250)
-    root.maxsize(1000, 1000)
-    root.geometry("300x300+100+100")
-    label = tk.Label(root, text="Please choose which you are logging", font=("Times New Roman",14,"bold"))
-    label.config(fg="magenta", background="pink")
-    label.pack()
-    label.pack_forget()
     #show the menu of options including view, income, expense, or quit(Braken helper function)
+    menu = Menu(["view","income","expense","quit"])
+    choice = menu.use()
     #if they choose view
-    def view():
+    if choice == "view":
         #get their infomation and input it into the graph function(made by levi)
         #display the graph
-        pass
+        y_line = "Input Instance"
+        title = "INCOME AND EXPENSES OVER TIME"
+        line_graph = Line(profile_info["income history"],profile_info["expense history"],y_line,title)
+        line_graph.show()
     #else if they choose income
-    def income():
+    elif choice == "income":
         #ask how much they got
         while True:
-            a_label = tk.Label(root, text="Please enter the amount of money you are inputing:", font=("Times New Roman",14,"bold"))
-            a_label.config(fg="magenta", background="pink")
-            a_label.pack()
-            tx = tk.Entry(root, height= 5, width= 30)
-            a_label.pack_forget()
+            amount = inputs(question="Please enter the amount of money you are inputing: ")
             try:
-                amount = float(tx.get())
+                float(amount)
                 break
             except ValueError:
-                b_label = tk.Label(root, text="That was not a number input again.", font=("Times New Roman",14,"bold"))
-                b_label.config(fg="magenta", background="pink")
-                b_label.pack()
-                b_label.pack_forget()
-            #ask for the source
-        c_label = tk.Label(root, text="Please enter the amount of money you are inputing:", font=("Times New Roman",14,"bold"))
-        c_label.config(fg="magenta", background="pink")
-        c_label.pack()
-        txt = tk.Entry(root, height= 5, width= 30)
-        source = txt.get().strip()
+                show("That is an invalid input. It must be a number")
+
+        #ask for the source
+        source = inputs("Please input the source of the money: ")
         #call the income class and formate this info to save
         income_input = Income(amount,source,profile_info)
         #go into budget input that amount and have the money distributed by the percentages of the catigories
+        profile_info = income_input.add_history()
         #formate that info and save it to the user profile with the save function(made by Braken)
     #else if they choose expense
-    def expense():
+    elif choice == "expense":
         #ask how much they spent
-        spent = int_input(prompt="Enter the amount of money you spent:")
+       
+        while True:
+            spent = inputs("Enter the amount of money you spent:")
+            try:
+                float(spent)
+                break
+            except ValueError:
+                show("That is an invalid input. It must be a number")
         #call the expense class
         expense_case = Expense(spent, profile_info)
         #save all that information to the user account
         #go into the budget info and subtract the amount from the specified catigory
     #else if they choose to quit
-    def quit():
+    elif choice == "quit":
         #exit the function
-        root.destroy()
-
-    view_btn = tk.Button(root, text="VIEW",command=view)
-    view_btn.pack()
-    income_btn = tk.Button(root, text="INCOME",command=income)
-    income_btn.pack()
-    expense_btn = tk.Button(root, text="EXPENSE",command=expense)
-    expense_btn.pack()
-    quit_btn = tk.Button(root, text="QUIT",command=quit)
-    quit_btn.pack()
+        print("\n")
 
 #function to go through all the catigories and get the new percentages for each
 def percent_change(user):
@@ -216,8 +199,5 @@ practice_dict = {"history": [],
 income_expense(practice_dict)
 
 
-profile = {"income history": [],
-           "expense history": [],
-           "catigories": {"starter": [0,100]}}
 
-income_expense(profile)
+
