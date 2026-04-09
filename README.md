@@ -1,6 +1,6 @@
 # Personal Finance Program(basic)
 ***
-![Image of code while running](documents\imagea.png)
+![Image of code while running](documents/imagea.png)
 
 Run the program create an account and set a goal. After give us your income and we will help you budget the money based off of categories with only a few lines of personal information. 
 
