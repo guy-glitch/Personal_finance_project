@@ -21,10 +21,10 @@ def exists(location, search):
     return False
 
 def add_user(username: str, hashed: str) -> None:
-    #if this recieves a username that already is stored it will overwrite it with the hashed password provided.
-    users = json_pull('documents/user.json')
-    users[username] = hashed
-    json_dump('documents/user.json',users)
+
+    with open("documents/user.json", "a", newline="") as f:
+        #bracken put his code in  here
+        graphics.show()
 
 #define a function that allows for the creation of the account using the already exists checker to check for the user name already exists if so make them use a diffrent username
 def create_account():
@@ -65,7 +65,7 @@ def create_account():
 
 def login():
     while True:
-        users = json_pull('documents/user.json')
+        users = parse_user()
         name = graphics.inputs("What is your username? ").strip()
         pw = graphics.inputs("What is your password? ")
         hashed = hash_pw(pw)
