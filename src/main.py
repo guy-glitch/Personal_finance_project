@@ -12,44 +12,26 @@ def main():
     #loop
     while True:
         #get user input for login/create account or exit
-        call=graphics.Menu(['Login/Create Account','Exit']).use()
-        print(call)
-        if call=='Exit':
+        if graphics.Menu(['Login/Create Account','Exit'])=='Exit':
             break
         #if login/create account
         else:
             #call login function(warren)
-            if graphics.Menu(['Login','Create Account']).use()=='Login':
-                user=login.login()
-            else:
-                user=login.create_account()
+            login.
             #loop
-            while True:
                 #get user input for manage income/expenses, create savings goal, update savings goal, budget, and log out
-                choice=graphics.Menu(['Manage Income/Expenses','Create Savings Goal','Update Savings Goal','Budget','Logout']).use()
                 #if manage incom/expenses
-                if choice=='Manage Income/Expenses':
                     #call incom/expense tracking function(anna)
-                    pass
                 #else if create savings goal
-                elif choice=='Create Savings Goal':
                     #call set goal function(warren)
-                    login.goal_get()#set user goal to this on user name
                 #else if update savings goal
-                elif choice=='Update Savings Goal':
                     #call goal update function(warren)
-                    login.new_goal_progress()#set this to user goal, give this user name
                 #else if budget
-                elif choice=='Budget':
                     #call budgeting function(anna)
-                    pass
                 #else
-                else:
                     #break out of loop
-                    break
         #else
             #break out of loop
     #call save to JSON function
     helper.json_dump('documents/user_info.json',info)
 
-main()

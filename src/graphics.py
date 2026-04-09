@@ -18,9 +18,9 @@ class Pie:
     #create function show
     def show(self):
         #show saved graph
-        fig,ax=plt.subplots(1,1)
-        ax.pie(self.values.values(),labels=self.values.keys(),autopct='%1.1f%%')
-        ax.set_title(self.caption)
+        fig,ax=plt.subplots(1,2)
+        ax[0].pie(self.values.values(),labels=self.values.keys(),autopct='%1.1f%%')
+        ax[0].set_title(self.caption)
         plt.show()
 
 
@@ -30,7 +30,7 @@ class Line:
     def __init__(self,plus,minus,y,capt):
         #plot and save line graph with plus line, minus line, and them combined line
         self.plus=plus
-        self.minus=minus
+        self.minus-minus
         self.y=y
         self.capt=capt
 
@@ -48,8 +48,8 @@ class Line:
         plt.ylabel(self.y)
         plt.title(self.capt)
         all={}
-        for i in range(len(self.plus)):
-            all[i]=list(self.plus.values())[i]+list(self.minus.values())[i]
+        for i in self.plus:
+            all[i]=self.plus[i]+self.minus[i]
         plt.plot(list(all.values()),color='b')
         plt.show()
 
@@ -83,40 +83,10 @@ class Menu:
     def __init__(self,options):
         #create window with boxes for every option
         self.options=options
-        self.result = None
 
     #create function use
     def use(self):
-        while True:
-            #show window
-            root=tkinter.Tk()
-            root.title('Personal Finance')
-            root.configure(background='black')
-            root.minsize(500,500)
-            root.maxsize(1000,1000)
-            root.geometry('700x700+1300+500')
-            #return option clicked
-            def push(name):
-                self.out=name
-                root.destroy()
-            #check for box click
-            self.buttons=[]
-            for i,v in enumerate(self.options):
-                self.buttons.append(tkinter.Button(root,text=v,command=lambda name=v: push(name)))
-            for v,i in enumerate(self.buttons):
-                i.pack()
-                i.place(x=100,y=700/len(self.options)*(v+0.42))
-            root.mainloop()
-            try:
-                return self.out
-            except:
-                pass
-        
-
-#create function inputs, get question and wrong
-def inputs(question,wrong=False):
-    #create window, show question and text box
-    while True:
+        #show window
         root=tkinter.Tk()
         root.title('Personal Finance')
         root.configure(background='black')
@@ -124,26 +94,50 @@ def inputs(question,wrong=False):
         root.maxsize(1000,1000)
         root.geometry('700x700+1300+500')
         out=tkinter.StringVar()
-        enter=tkinter.Entry(root,width=50,textvariable=out)
-        enter.pack()
-        enter.place(x=200,y=350)
-        q=tkinter.Label(root,text=question)
-        q.pack()
-        q.place(x=250,y=300)
-        #return text box entry
-        def end():
+        #return option clicked
+        def push(name):
+            out=name
             root.destroy()
-        #if wrong is true, also show invalid input, try again
-        if wrong:
-            error=tkinter.Label(root,text='Invalid input. Try again.')
-            error.pack()
-            error.place(x=270,y=250)
-        button=tkinter.Button(root,text='Enter',command=end)
-        button.pack()
-        button.place(x=300,y=370)
+        #check for box click
+        buttons=[]
+        for v in self.options:
+            buttons.append(tkinter.Button(root,text=v,command=lambda: push(v)))
+        for v,i in enumerate(buttons):
+            i.pack()
+            i.place(x=100,y=700/len(self.options)*(v+0.42))
         root.mainloop()
-        if out.get()!="":
-            return out.get()
+        return out
+        
+
+#create function inputs, get question and wrong
+def inputs(question,wrong=False):
+    #create window, show question and text box
+    root=tkinter.Tk()
+    root.title('Personal Finance')
+    root.configure(background='black')
+    root.minsize(500,500)
+    root.maxsize(1000,1000)
+    root.geometry('700x700+1300+500')
+    out=tkinter.StringVar()
+    enter=tkinter.Entry(root,width=50,textvariable=out)
+    enter.pack()
+    enter.place(x=200,y=350)
+    q=tkinter.Label(root,text=question)
+    q.pack()
+    q.place(x=250,y=300)
+    #return text box entry
+    def end():
+        root.destroy()
+    #if wrong is true, also show invalid input, try again
+    if wrong:
+        error=tkinter.Label(root,text='Invalid input. Try again.')
+        error.pack()
+        error.place(x=270,y=250)
+    button=tkinter.Button(root,text='Enter',command=end)
+    button.pack()
+    button.place(x=300,y=370)
+    root.mainloop()
+    return out.get()
 
 #create function show, get stuff
 def show(stuff):
@@ -154,13 +148,12 @@ def show(stuff):
     root.minsize(500,500)
     root.maxsize(1000,1000)
     root.geometry('700x700+1300+500')
-    message = tkinter.Message(root,text=stuff,width=700)
-    message.pack()
-    message.place(x=300,y=400)
+    tkinter.Message(root,text=stuff,width=700)
     def end():
         root.destroy()
     button=tkinter.Button(root,text='Continue',command=end)
     button.pack()
     button.place(x=300,y=500)
     root.mainloop()
+
 #need to test everything except inputs
