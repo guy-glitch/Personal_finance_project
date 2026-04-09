@@ -3,6 +3,7 @@
 #Pseudocode
 from helper import *
 from datetime import datetime
+import tkinter as tk
 #Classes
 #income class
 class Income():
@@ -81,25 +82,51 @@ Time:{self.time()}"""
 #income and expense tracking
 def income_expense(profile_info):
 #parameters:user profile info
+    root = tk.Tk()
+    root.title("Income and Expense Tracking")
+    root.configure(background="pink")
+    root.minsize(250, 250)
+    root.maxsize(1000, 1000)
+    root.geometry("300x300+100+100")
+    label = tk.Label(root, text="Please choose which you are logging", font=("Times New Roman",14,"bold"))
+    label.config(fg="magenta", background="pink")
+    label.pack()
+    label.pack_forget()
     #show the menu of options including view, income, expense, or quit(Braken helper function)
-    choice = list_choice(["view", "income","expense","quit"], prompt="Choose one of the following actions to complete:")
     #if they choose view
-    if choice == "view":
+    def view():
         #get their infomation and input it into the graph function(made by levi)
         #display the graph
         pass
     #else if they choose income
-    elif choice == "income":
+    def income():
         #ask how much they got
-        amount = int_input(prompt="Please enter the amount of money you are inputing: ")
-        #ask for the source
-        source = input("Please input the source of the money: ")
+        while True:
+            a_label = tk.Label(root, text="Please enter the amount of money you are inputing:", font=("Times New Roman",14,"bold"))
+            a_label.config(fg="magenta", background="pink")
+            a_label.pack()
+            tx = tk.Entry(root, height= 5, width= 30)
+            a_label.pack_forget()
+            try:
+                amount = float(tx.get())
+                break
+            except ValueError:
+                b_label = tk.Label(root, text="That was not a number input again.", font=("Times New Roman",14,"bold"))
+                b_label.config(fg="magenta", background="pink")
+                b_label.pack()
+                b_label.pack_forget()
+            #ask for the source
+        c_label = tk.Label(root, text="Please enter the amount of money you are inputing:", font=("Times New Roman",14,"bold"))
+        c_label.config(fg="magenta", background="pink")
+        c_label.pack()
+        txt = tk.Entry(root, height= 5, width= 30)
+        source = txt.get().strip()
         #call the income class and formate this info to save
         income_input = Income(amount,source,profile_info)
         #go into budget input that amount and have the money distributed by the percentages of the catigories
         #formate that info and save it to the user profile with the save function(made by Braken)
     #else if they choose expense
-    elif choice == "expense":
+    def expense():
         #ask how much they spent
         spent = int_input(prompt="Enter the amount of money you spent:")
         #call the expense class
@@ -107,9 +134,18 @@ def income_expense(profile_info):
         #save all that information to the user account
         #go into the budget info and subtract the amount from the specified catigory
     #else if they choose to quit
-    elif choice == "quit":
+    def quit():
         #exit the function
-        print("\n")
+        root.destroy()
+
+    view_btn = tk.Button(root, text="VIEW",command=view)
+    view_btn.pack()
+    income_btn = tk.Button(root, text="INCOME",command=income)
+    income_btn.pack()
+    expense_btn = tk.Button(root, text="EXPENSE",command=expense)
+    expense_btn.pack()
+    quit_btn = tk.Button(root, text="QUIT",command=quit)
+    quit_btn.pack()
 
 #function to go through all the catigories and get the new percentages for each
 def percent_change(user):
@@ -180,5 +216,8 @@ practice_dict = {"history": [],
 income_expense(practice_dict)
 
 
+profile = {"income history": [],
+           "expense history": [],
+           "catigories": {"starter": [0,100]}}
 
-
+income_expense(profile)
