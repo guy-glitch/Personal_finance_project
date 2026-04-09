@@ -1,6 +1,7 @@
 # Personal Finance Program(basic)
 ***
-![Image of code while running](location of image in folders)
+***
+![Image of code while running](documents/Screenshot 2026-04-09 091455.png)
 paragraph project description
 
 ## How to use
@@ -19,7 +20,6 @@ paragraph project description
 - 🥅Allows for you to set savings goals🥅
 - 🔥Allows multiple users🔥
 - 🖼️Simple graphics 🖼️
-- 
 
 ## License information
 ***
