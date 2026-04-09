@@ -12,20 +12,20 @@ def main():
     #loop
     while True:
         #get user input for login/create account or exit
-        if graphics.Menu(['Login/Create Account','Exit'])=='Exit':
+        if graphics.Menu(['Login/Create Account','Exit']).use()=='Exit':
             break
         #if login/create account
         else:
             #call login function(warren)
-            if graphics.Menu(['Login','Create Account'])=='Login':
+            if graphics.Menu(['Login','Create Account']).use()=='Login':
                 user=login.login()
             else:
                 user=login.create_account()
-                helper.json_dump(info.update({user:{'history':{'income':[],'expenses':[]},'categories':{},'goal':[0,0]}}))
+                helper.json_dump('documents/user_info.json',info.update({user:{'history':{'income':[],'expenses':[]},'categories':{},'goal':[0,0]}}))
             #loop
             while True:
                 #get user input for manage income/expenses, create savings goal, update savings goal, budget, and log out
-                choice=graphics.Menu(['Manage Income/expenses','Create Savings Goal','Update Savings Goal','Budget','Logout'])
+                choice=graphics.Menu(['Manage Income/expenses','Create Savings Goal','Update Savings Goal','Budget','Logout']).use()
                 #if manage incom/expenses
                 if choice=='Manage Income/expenses':
                     #call incom/expense tracking function(anna)
