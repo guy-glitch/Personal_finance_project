@@ -2,7 +2,7 @@
 ***
 ![Image of code while running](documents/imagea.png)
 
-Run the program create an account and set a goal. After give us your income and we will help you budget the money based off of categories with only a few lines of personal information. 
+Run the program create an account and set a goal. After you give us your income and we will help you budget the money based off of categories with only a few lines of personal information! After you login it will take a couple of seconds to save your personel information.
 
 ## How to use
 ***
