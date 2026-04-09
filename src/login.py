@@ -84,9 +84,7 @@ def goal_get():
     goal = graphics.inputs(f"What do you want to set your goal too?").strip()
     return [goal, 0]
 
-def update_goal(user):
-    goal_get(user)
-    add_user()
+
 
 
 
@@ -100,5 +98,3 @@ def new_goal_progress(goal):
 #A function that logs them out and takes them back to the main menu without them being logged in.
 def logout(): 
     return 
-
-goal_get()
