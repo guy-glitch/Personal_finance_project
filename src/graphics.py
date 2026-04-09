@@ -1,6 +1,6 @@
 #graphs and graphics
 
-import matplotlib.pyplot as plt, tkinter, copy
+import matplotlib.pyplot as plt, tkinter
 
 #create class pie,
 class Pie:
@@ -149,12 +149,13 @@ def show(stuff):
     root.minsize(500,500)
     root.maxsize(1000,1000)
     root.geometry('700x700+1300+500')
-    tkinter.Message(root,text=stuff,width=700)
+    message = tkinter.Message(root,text=stuff,width=700)
+    message.pack()
+    message.place(x=300,y=400)
     def end():
         root.destroy()
     button=tkinter.Button(root,text='Continue',command=end)
     button.pack()
     button.place(x=300,y=500)
     root.mainloop()
-
 #need to test everything except inputs
