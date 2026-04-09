@@ -51,3 +51,4 @@ def main():
     #call save to JSON function
     helper.json_dump('documents/user_info.json',info)
 
+main()
