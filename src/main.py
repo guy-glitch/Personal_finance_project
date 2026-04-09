@@ -1,10 +1,14 @@
 #main function
 
 #import absolutely everything
-import graphics
+import graphics,login,helper
+
+#dict={char:{history:{income:[income values],expenses:[expense values]},categories:{category:value},goal:[goal,progress]}}
 
 #create function main
 def main():
+    #call retrieve info JSON function(bracken)
+    info=helper.json_pull('documents/user_info.json')
     #loop
     while True:
         #get user input for login/create account or exit
@@ -12,7 +16,6 @@ def main():
             break
         #if login/create account
         else:
-            #call retrieve info JSON function(bracken)
             #call login function(warren)
             login.
             #loop
@@ -30,4 +33,5 @@ def main():
         #else
             #break out of loop
     #call save to JSON function
+    helper.json_dump('documents/user_info.json',info)
 
