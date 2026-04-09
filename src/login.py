@@ -70,9 +70,9 @@ def login():
         pw = graphics.inputs("What is your password? ")
         hashed = hash_pw(pw)
 
-        for u in users:
+        for u in users.keys():
 
-            if u["username"] == name and u["password"] == hashed:
+            if u == name and users[u] == hashed:
                 graphics.show("Login successful.")
                 clear_wait_screen()
                 clear_screen()
