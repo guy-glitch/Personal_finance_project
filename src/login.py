@@ -21,10 +21,10 @@ def exists(location, search):
     return False
 
 def add_user(username: str, hashed: str) -> None:
-
-    with open("documents/user.json", "a", newline="") as f:
-        #bracken put his code in  here
-        graphics.show()
+    #if this recieves a username that already is stored it will overwrite it with the hashed password provided.
+    users = json_pull('documents/user.json')
+    users[username] = hashed
+    json_dump('documents/user.json',users)
 
 #define a function that allows for the creation of the account using the already exists checker to check for the user name already exists if so make them use a diffrent username
 def create_account():
@@ -65,14 +65,14 @@ def create_account():
 
 def login():
     while True:
-        users = parse_user()
+        users = json_pull('documents/user.json')
         name = graphics.inputs("What is your username? ").strip()
         pw = graphics.inputs("What is your password? ")
         hashed = hash_pw(pw)
 
-        for u in users:
+        for u in users.keys():
 
-            if u["username"] == name and u["password"] == hashed:
+            if u == name and users[u] == hashed:
                 graphics.show("Login successful.")
                 clear_wait_screen()
                 clear_screen()
@@ -98,7 +98,7 @@ def new_goal_progress(goal):
     #Do the thing where you add the progress to the json
 
 #A function that logs them out and takes them back to the main menu without them being logged in.
-def logout():
+def logout(): 
     return 
 
 goal_get()
