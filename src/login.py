@@ -76,7 +76,7 @@ def login():
                 graphics.show("Login successful.")
                 clear_wait_screen()
                 clear_screen()
-                return 
+                return name
         graphics.show("Invalid username or password.")
 
 #A function that gets their goal and saves it
