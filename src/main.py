@@ -21,7 +21,8 @@ def main():
                 user=login.login()
             else:
                 user=login.create_account()
-                helper.json_dump('documents/user_info.json',info.update({user:{'history':{'income':[],'expenses':[]},'categories':{},'goal':[0,0]}}))
+                info[user] = {'history':{'income':[],'expenses':[]},'categories':{},'goal':[0,0]}
+                helper.json_dump('documents/user_info.json',info)
             #loop
             while True:
                 #get user input for manage income/expenses, create savings goal, update savings goal, budget, and log out
