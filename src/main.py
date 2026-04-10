@@ -26,7 +26,7 @@ def main():
             #loop
             while True:
                 #get user input for manage income/expenses, create savings goal, update savings goal, budget, and log out
-                choice=graphics.Menu(['Manage Income/expenses','Create Savings Goal','Update Savings Goal','Budget','Logout']).use()
+                choice=graphics.Menu(['Manage Income/expenses','Create Savings Goal','Show Savings Goal','Update Savings Goal','Budget','Logout']).use()
                 #if manage incom/expenses
                 if choice=='Manage Income/expenses':
                     #call incom/expense tracking function(anna)
@@ -35,6 +35,11 @@ def main():
                 elif choice=='Create Savings Goal':
                     #call set goal function(warren)
                     info[user]['goal']=login.goal_get()
+                elif choice=='Show Savings Goal':
+                    try:
+                        graphics.show(f'Goal: {info[user]['goal'][0]}\nProgress: {info[user]['goal'][1]}\nPercent: {100*info[user]['goal'][1]/info[user]['goal'][0]}%')
+                    except:
+                        graphics.show('Error: no goal set')
                 #else if update savings goal
                 elif choice=='Update Savings Goal':
                     #call goal update function(warren)
@@ -42,7 +47,7 @@ def main():
                 #else if budget
                 elif choice=='Budget':
                     #call budgeting function(anna)
-                    pass
+                    budget.budgeting(user)
                 #else
                 else:
                     #break out of loop

@@ -26,7 +26,7 @@ class Pie:
 
 #create class Line
 class Line:
-#   create function init, get plus, minus dictionaries
+#   create function init, get plus, minus lists
     def __init__(self,plus,minus,y,capt):
         #plot and save line graph with plus line, minus line, and them combined line
         self.plus=plus
@@ -37,20 +37,20 @@ class Line:
     #create function update, get plus, minus dictionaries
     def update(self,plus,minus):
         #update saved graph
-        self.plus|=plus
-        self.minus|=minus
+        self.plus+=plus
+        self.minus+=minus
     
     #create functon show
     def show(self):
         #show saved graph
-        plt.plot(list(self.plus.values()),color='g')
-        plt.plot(list(self.minus.values()),color='r')
+        plt.plot(self.plus,color='g')
+        plt.plot(self.minus,color='r')
         plt.ylabel(self.y)
         plt.title(self.capt)
-        all={}
-        for i in self.plus:
-            all[i]=self.plus[i]+self.minus[i]
-        plt.plot(list(all.values()),color='b')
+        all=[]
+        for i,v in enumerate(self.plus):
+            all.append(v+self.minus[i])
+        plt.plot(all,color='b')
         plt.show()
 
 
