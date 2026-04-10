@@ -30,7 +30,7 @@ class Line:
     def __init__(self,plus,minus,y,capt):
         #plot and save line graph with plus line, minus line, and them combined line
         self.plus=plus
-        self.minus-minus
+        self.minus=minus
         self.y=y
         self.capt=capt
 
