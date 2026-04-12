@@ -1,7 +1,7 @@
 #main function
 
 #import absolutely everything
-import graphics,login,helper,budget
+import graphics,login,helper,budget,currency
 
 #dict={char:{history:{income:[income values],expenses:[expense values]},categories:{category:value},goal:[goal,progress]}}
 
@@ -26,7 +26,7 @@ def main():
             #loop
             while True:
                 #get user input for manage income/expenses, create savings goal, update savings goal, budget, and log out
-                choice=graphics.Menu(['Manage Income/expenses','Create Savings Goal','Show Savings Goal','Update Savings Goal','Budget','Logout']).use()
+                choice=graphics.Menu(['Manage Income/expenses','Create Savings Goal','Show Savings Goal','Update Savings Goal','Budget','Convert Currencies','Logout']).use()
                 #if manage incom/expenses
                 if choice=='Manage Income/expenses':
                     #call incom/expense tracking function(anna)
@@ -48,6 +48,10 @@ def main():
                 elif choice=='Budget':
                     #call budgeting function(anna)
                     budget.budgeting(user)
+                elif choice=='Convert Currencies':
+                    choic=graphics.Menu(['USD to EUR','USD to JPY','USD to GBP','EUR to USD','JPY to USD','GBP to USD']).use()
+                    choic=['USD to EUR','USD to JPY','USD to GBP','EUR to USD','JPY to USD','GBP to USD'].index(choic)+1
+                    currency.casing(choic)
                 #else
                 else:
                     #break out of loop
