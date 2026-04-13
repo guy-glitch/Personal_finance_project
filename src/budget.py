@@ -23,7 +23,7 @@ class Income():
     
     def update_amount(self):
         for i in self.user["catigories"].keys():
-            value = self.user["catigories"][i].get()
+            value = self.user["catigories"][i]
             v = value[1]/100
             v_2 = self.amount*v
             self.user["catigories"][i] += v_2
@@ -53,7 +53,7 @@ class Expense():
         return self.user
     #time
     def update_amount(self,catigory):
-        self.user["catigories"][catigory] -= self.amount
+        self.user["catigories"][catigory] + = self.amount
         return self.user
     def time(self):
         now = datetime.now() 
@@ -93,8 +93,7 @@ def float_validation(message):
 def income_expense(profile_info):
 #parameters:user profile info
     #show the menu of options including view, income, expense, or quit(Braken helper function)
-    menu = Menu(["view","income","expense","quit"])
-    choice = menu.use()
+    choice = Menu(["view","income","expense","quit"]).use()
     #if they choose view
     if choice == "view":
         #get their infomation and input it into the graph function(made by levi)
@@ -113,6 +112,7 @@ def income_expense(profile_info):
         income_input = Income(amount,source,profile_info)
         #go into budget input that amount and have the money distributed by the percentages of the catigories
         profile_info = income_input.add_history()
+        profile_info = income_input.update_amount()
         #formate that info and save it to the user profile with the save function(made by Braken)
     #else if they choose expense
     elif choice == "expense":
@@ -132,7 +132,7 @@ def income_expense(profile_info):
 def percent_change(user):
     #then tell them what all the catigories are currently and their percentages
             for key in user["catigories"].keys():
-                show(f"{key}: {user["catigories"][key]}")
+                show(f"{key}: {user['catigories'][key]}")
             #go through each of the catigories and ask for the new percentage
             while True:
                 sum_total = 0
@@ -154,7 +154,7 @@ def percent_change(user):
 def budgeting(user):
 #parameters:user profile info
     #create a menu that has the option to view, change, or quit
-    choice = Menu(["view","change","quit"])
+    choice = Menu(["view","change","quit"]).use()
     #if they choose to view
     if choice == "view":
         #get dictionary of user values to use in the graph
@@ -163,32 +163,33 @@ def budgeting(user):
         for key in user["catigories"].keys():
             new_dict[key] = user["catigories"][key][0]
         bar_graph = Bars(new_dict,"Amount of money","BUDGET MONEY ALLOCATION")
+        bar_graph.show()
     #else if they choose to change
     elif choice == "change":
         #ask if they would like to change the percentages or the catigories
-        choice_2 = Menu(["percent","catigory"])
+        choice_2 = Menu(["percent","catigory"]).use()
         #if they choose percentages
         if choice_2 == "percent":
             percent_change(user)
         #else if they choose catigories
-        elif choice == "catigory":
+        elif choice_2 == "catigory":
             #ask if they would like to add or remove a catigory
-            choice_3 = Menu(["add","remove"])
+            choice_3 = Menu(["add","remove"]).use()
             #display all current catigories 
             #if they choose remove 
             if choice_3 == "remove":
                     #ask which they would like to remove 
-                    choice_4 = Menu(user["catigories"].keys())
+                    choice_4 = Menu(user["catigories"].keys()).use()
                     #remove it
-                    user["catigories"].pop(choice_4)
+                    user["catigories"].remove(choice_4)
                     #go through the same process of changing percentages as when changing percentages above
                     percent_change(user)
             #else if they choose to add
-            elif choice_4 == "add":
+            elif choice_3 == "add":
                 #ask for the name of the new catigory
                 name = inputs("Input the name of the new catigory: ")
                 #add it
-                user["catigory"][name] = [0,0]
+                user["catigories"][name] = [0,0]
                 #go through the same process of changing percentages as when changing percentages above
                 #else make them choose again and tell them int was an invalid choice
                 percent_change(user)
