@@ -45,7 +45,7 @@ def create_account():
         pw = graphics.inputs("Choose a password (12+ chars, upper, lower, digit, special): ")
         add_user(name, hash_pw(pw))
         graphics.show("Account created.")
-        break
+        return name
     
     #get their password
     
@@ -76,23 +76,23 @@ def login():
                 graphics.show("Login successful.")
                 clear_wait_screen()
                 clear_screen()
-                return 
+                return name
         graphics.show("Invalid username or password.")
 
 #A function that gets their goal and saves it
-def goal_get(user):
-    goal = graphics.inputs(f"{user} what do you want to set your goal too?").strip()
-    return goal
+def goal_get():
+    goal = graphics.inputs(f"What do you want to set your goal too?").strip()
+    return [goal, 0]
 
-def update_goal(user):
-    goal_get(user)
-    add_user()
+
 
 
 
 #A function that takes in their previous progress towards their goal, and then asks how much more money they have added, and updates the progress.
-def new_goal_progress(user):
+def new_goal_progress(goal):
     progress = graphics.inputs(f"What progress have you made towards your goal? ").strip()
+    new_progress = progress + goal[1]
+    return [goal[0], new_progress]
     #Do the thing where you add the progress to the json
 
 #A function that logs them out and takes them back to the main menu without them being logged in.

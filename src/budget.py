@@ -18,7 +18,7 @@ class Income():
         #formate it
         add = f"{self.amount}|{self.source}|{self.time()}"
         #add to user history
-        self.user["income history"].append(add)
+        self.user["history"]["income"].append(add)
         return self.user
     
     def update_amount(self):
@@ -49,7 +49,7 @@ class Expense():
         add = f"{self.amount}|{catigori}|{self.time()}"
         #add to user history
         self.update_amount(catigori)
-        self.user["expense history"].append(add)
+        self.user["history"]["expenses"].append(add)
         return self.user
     #time
     def update_amount(self,catigory):
@@ -100,7 +100,7 @@ def income_expense(profile_info):
         #display the graph
         y_line = "Input Instance"
         title = "INCOME AND EXPENSES OVER TIME"
-        line_graph = Line(profile_info["income history"],profile_info["expense history"],y_line,title)
+        line_graph = Line(profile_info["history"]["income"],profile_info["history"]["expenses"],y_line,title)
         line_graph.show()
     #else if they choose income
     elif choice == "income":

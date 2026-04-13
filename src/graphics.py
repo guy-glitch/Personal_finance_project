@@ -26,7 +26,7 @@ class Pie:
 
 #create class Line
 class Line:
-#   create function init, get plus, minus dictionaries
+#   create function init, get plus, minus lists
     def __init__(self,plus,minus,y,capt):
         #plot and save line graph with plus line, minus line, and them combined line
         self.plus=plus
@@ -37,20 +37,20 @@ class Line:
     #create function update, get plus, minus dictionaries
     def update(self,plus,minus):
         #update saved graph
-        self.plus|=plus
-        self.minus|=minus
+        self.plus+=plus
+        self.minus+=minus
     
     #create functon show
     def show(self):
         #show saved graph
-        plt.plot(list(self.plus.values()),color='g')
-        plt.plot(list(self.minus.values()),color='r')
+        plt.plot(self.plus,color='g')
+        plt.plot(self.minus,color='r')
         plt.ylabel(self.y)
         plt.title(self.capt)
-        all={}
-        for i in range(len(self.plus)):
-            all[i]=list(self.plus.values())[i]+list(self.minus.values())[i]
-        plt.plot(list(all.values()),color='b')
+        all=[]
+        for i,v in enumerate(self.plus):
+            all.append(v+self.minus[i])
+        plt.plot(all,color='b')
         plt.show()
 
 
@@ -83,27 +83,27 @@ class Menu:
     def __init__(self,options):
         #create window with boxes for every option
         self.options=options
-        self.result = None
 
     #create function use
     def use(self):
+        #show window
         while True:
-            #show window
             root=tkinter.Tk()
             root.title('Personal Finance')
             root.configure(background='black')
             root.minsize(500,500)
             root.maxsize(1000,1000)
             root.geometry('700x700+1300+500')
+            self.out=tkinter.StringVar()
             #return option clicked
             def push(name):
                 self.out=name
                 root.destroy()
             #check for box click
-            self.buttons=[]
-            for i,v in enumerate(self.options):
-                self.buttons.append(tkinter.Button(root,text=v,command=lambda name=v: push(name)))
-            for v,i in enumerate(self.buttons):
+            buttons=[]
+            for v in self.options:
+                buttons.append(tkinter.Button(root,text=v,command=lambda v=v: push(v)))
+            for v,i in enumerate(buttons):
                 i.pack()
                 i.place(x=100,y=700/len(self.options)*(v+0.42))
             root.mainloop()
@@ -115,8 +115,8 @@ class Menu:
 
 #create function inputs, get question and wrong
 def inputs(question,wrong=False):
-    #create window, show question and text box
     while True:
+        #create window, show question and text box
         root=tkinter.Tk()
         root.title('Personal Finance')
         root.configure(background='black')
@@ -154,13 +154,12 @@ def show(stuff):
     root.minsize(500,500)
     root.maxsize(1000,1000)
     root.geometry('700x700+1300+500')
-    message = tkinter.Message(root,text=stuff,width=700)
-    message.pack()
-    message.place(x=300,y=400)
+    tkinter.Message(root,text=stuff,width=700).pack()
     def end():
         root.destroy()
     button=tkinter.Button(root,text='Continue',command=end)
     button.pack()
     button.place(x=300,y=500)
     root.mainloop()
+
 #need to test everything except inputs
