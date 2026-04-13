@@ -68,7 +68,7 @@ class Expense():
         #start while loop
         while True:
             #show all the catiogories
-            choice = Menu(categories.keys(), prompt="Choose a category you would like to withdraw money from:")
+            choice = Menu(categories.keys()).use()
             #ask user to choose one
             #if it is actually a category
             if choice in categories: 
