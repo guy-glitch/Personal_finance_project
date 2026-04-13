@@ -23,10 +23,11 @@ class Income():
     
     def update_amount(self):
         for i in self.user["catigories"].keys():
-            value = self.user["catigories"][i].get()
+            value = self.user["catigories"][i]
             v = value[1]/100
             v_2 = self.amount*v
             self.user["catigories"][i] += v_2
+        return self.user
     def time(self):
         now = datetime.now() 
         #formatted time is the time in the correct formate
@@ -52,7 +53,7 @@ class Expense():
         return self.user
     #time
     def update_amount(self,catigory):
-        self.user["catigories"][catigory] -= self.amount
+        self.user["catigories"][catigory] + = self.amount
         return self.user
     def time(self):
         now = datetime.now() 
@@ -78,12 +79,21 @@ class Expense():
                 print("That was an invalid choice of catigory choose again")
                 #restart loop and go again
 
+def float_validation(message):
+    while True:
+        amount = inputs(question=message)
+        try:
+            float(amount)
+            break
+        except ValueError:
+            show("That is an invalid input. It must be a number")
+    return amount
+
 #income and expense tracking
 def income_expense(profile_info):
 #parameters:user profile info
     #show the menu of options including view, income, expense, or quit(Braken helper function)
-    menu = Menu(["view","income","expense","quit"])
-    choice = menu.use()
+    choice = Menu(["view","income","expense","quit"]).use()
     #if they choose view
     if choice == "view":
         #get their infomation and input it into the graph function(made by levi)
@@ -95,96 +105,91 @@ def income_expense(profile_info):
     #else if they choose income
     elif choice == "income":
         #ask how much they got
-        while True:
-            amount = inputs(question="Please enter the amount of money you are inputing: ")
-            try:
-                float(amount)
-                break
-            except ValueError:
-                show("That is an invalid input. It must be a number")
-
+        amount = float_validation("Please input the amount of money you are inputing:")
         #ask for the source
         source = inputs("Please input the source of the money: ")
         #call the income class and formate this info to save
         income_input = Income(amount,source,profile_info)
         #go into budget input that amount and have the money distributed by the percentages of the catigories
         profile_info = income_input.add_history()
+        profile_info = income_input.update_amount()
         #formate that info and save it to the user profile with the save function(made by Braken)
     #else if they choose expense
     elif choice == "expense":
         #ask how much they spent
-       
-        while True:
-            spent = inputs("Enter the amount of money you spent:")
-            try:
-                float(spent)
-                break
-            except ValueError:
-                show("That is an invalid input. It must be a number")
+        spent = float_validation("Enter the amount of money you spent:")
         #call the expense class
         expense_case = Expense(spent, profile_info)
         #save all that information to the user account
+        profile_info = expense_case.add_history()
         #go into the budget info and subtract the amount from the specified catigory
     #else if they choose to quit
     elif choice == "quit":
         #exit the function
-        print("\n")
+        pass
 
 #function to go through all the catigories and get the new percentages for each
 def percent_change(user):
     #then tell them what all the catigories are currently and their percentages
             for key in user["catigories"].keys():
-                print(f"{key}: {user["catigories"].get(key)}")
+                show(f"{key}: {user['catigories'][key]}")
             #go through each of the catigories and ask for the new percentage
             while True:
+                sum_total = 0
+                for key in user["catigories"].keys():
+                    sum_total += user['catigories'][key][0] 
                 total = 0
                 for key in user["catigories"].keys():
-                   print(key.title())
-                   new_perc = float(input("Input the new a percentage for this catigory:")) 
-                   user["catigories"][key] = new_perc
+                   show(key.title())
+                   new_perc = float_validation("Input the new a percentage for this catigory:") 
+                   user["catigories"][key][1] = new_perc
                    total += new_perc
                 #make sure they don't go over 100 percent
                 if total == 100:
                     break
                 else:
-                    print("Sorry you went over or under 100% percent please go through it again and allocate the percentages correctly.")
+                    show("Sorry you went over or under 100% percent please go through it again and allocate the percentages correctly.")
 
 #budgeting function
 def budgeting(user):
 #parameters:user profile info
     #create a menu that has the option to view, change, or quit
-    choice = list_choice(["view","change","quit"], prompt="Choose the action you would like to complete with you budget:")
+    choice = Menu(["view","change","quit"]).use()
     #if they choose to view
     if choice == "view":
         #get dictionary of user values to use in the graph
         #display the graph with the display function(Levi)
-        pass
+        new_dict = {}
+        for key in user["catigories"].keys():
+            new_dict[key] = user["catigories"][key][0]
+        bar_graph = Bars(new_dict,"Amount of money","BUDGET MONEY ALLOCATION")
+        bar_graph.show()
     #else if they choose to change
     elif choice == "change":
         #ask if they would like to change the percentages or the catigories
-        choice_2 = list_choice(["percent","catigory"], prompt="Choose which aspect of you budget you would like to change:")
+        choice_2 = Menu(["percent","catigory"]).use()
         #if they choose percentages
         if choice_2 == "percent":
             percent_change(user)
         #else if they choose catigories
-        elif choice == "catigory":
+        elif choice_2 == "catigory":
             #ask if they would like to add or remove a catigory
-            choice_3 = list_choice(["add","remove"],prompt="Would you like to add or remove a catigory:")
+            choice_3 = Menu(["add","remove"]).use()
             #display all current catigories 
             #if they choose remove 
             if choice_3 == "remove":
                     #ask which they would like to remove 
-                    choice_4 = list_choice(user["catigories"].keys(),prompt="Choose which catigory you want to remove:")
+                    choice_4 = Menu(user["catigories"].keys()).use()
                     #remove it
-                    user["catigories"].pop(choice_4)
+                    user["catigories"].remove(choice_4)
                     #go through the same process of changing percentages as when changing percentages above
                     percent_change(user)
             #else if they choose to add
-            elif choice_4 == "add":
+            elif choice_3 == "add":
                 #ask for the name of the new catigory
-                name = input("Input the name of the new catigory: ")
+                name = inputs("Input the name of the new catigory: ")
                 #add it
-                user["catigory"][name] = 0
+                user["catigories"][name] = [0,0]
                 #go through the same process of changing percentages as when changing percentages above
                 #else make them choose again and tell them int was an invalid choice
                 percent_change(user)
@@ -194,9 +199,10 @@ def budgeting(user):
         #exit the function
         pass
 
-#practice_dict = {"history": [],
-#                 "catigories": {"starter":[0,100]}}
-#income_expense(practice_dict)
+practice_dict = {"expense history": [],
+                 "income history": [],
+                 "catigories": {"starter":[0,100]}}
+income_expense(practice_dict)
 
 
 
