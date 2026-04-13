@@ -104,7 +104,8 @@ def new_goal_progress(goal):
             progress = int(graphics.inputs(f"What progress have you made towards your goal?",wrong=good).strip())
             break
         except:
-            new_progress = progress + goal[1]
+            good=True
+    new_progress = progress + goal[1]
     return [goal[0], new_progress]
     #Do the thing where you add the progress to the json
 
