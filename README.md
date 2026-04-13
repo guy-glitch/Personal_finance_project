@@ -18,6 +18,9 @@ This is a personal finance program, where you can create an account to track inc
 - 🥅Allows for you to set savings goals🥅
 - 🔥Allows multiple users🔥
 - 🖼️Simple graphics 🖼️
+- It pauses on occasion between menus
+- To save you have to logout and exit
+
 
 ## License information
 No copyright
