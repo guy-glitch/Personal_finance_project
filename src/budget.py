@@ -200,11 +200,6 @@ def budgeting(user):
             #exit the function
             break
 
-practice_dict = {"expense history": ["50|starter|April 13, 2026"],
-                 "income history": ["1000|job|April 13, 2026"],
-                 'categories': {"starter":[950,100]}}
-income_expense(practice_dict)
-
 
 
 
