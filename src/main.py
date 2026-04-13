@@ -21,7 +21,7 @@ def main():
                 user=login.login()
             else:
                 user=login.create_account()
-                info[user] = {'history':{'income':[],'expenses':[]},'categories':{},'goal':[0,0]}
+                info[user] = {'income history':[],'expense history':[],'categories':{},'goal':[0,0]}
                 helper.json_dump('documents/user_info.json',info)
             #loop
             while True:
