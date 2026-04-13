@@ -86,7 +86,7 @@ def goal_get():
     good=False
     while True:
         try:
-            goal = int(graphics.inputs(f"What do you want to set your goal too?",wrong=good).strip())
+            goal = float(graphics.inputs(f"What do you want to set your goal too?",wrong=good).strip())
             break
         except:
             good=True
@@ -101,7 +101,7 @@ def new_goal_progress(goal):
     good=False
     while True:
         try:
-            progress = int(graphics.inputs(f"What progress have you made towards your goal?",wrong=good).strip())
+            progress = float(graphics.inputs(f"What progress have you made towards your goal?",wrong=good).strip())
             break
         except:
             good=True
